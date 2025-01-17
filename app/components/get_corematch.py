@@ -373,7 +373,7 @@ class GetCoreMatch():
         self.table.title = "s"
         self.table.field_names = ["Team","Agent", "Name", "Rank", "RR", "Leaderboard Position", "Level"]
         print(self.table)
-        print("MAIN RESULTS",teams)
+        print("MAIN RESULTS -- ",teams)
         teams["initiated_player_team"] = initiated_player_team
         return teams
 if __name__ == "__main__":
