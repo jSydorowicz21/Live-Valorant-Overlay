@@ -33,13 +33,13 @@ class GetCreds():
     def process_frame(self, frame, side):
         all_points = []
         if side == "top":
-            y_start = 383
-            y_end = 410
+            y_start = 510  # Updated from 383 for 1440p (383 * 1.333)
+            y_end = 546  # Updated from 410 for 1440p (410 * 1.333)
         else:
-            y_start = 1192
-            y_end = y_start + 40
+            y_start = 1589  # Updated from 1192 for 1440p (1192 * 1.333)
+            y_end = y_start + 53  # Updated from 40 for 1440p (40 * 1.333)
         for agent_row in range(0, 5):
-            cropped_cred_image = frame[y_start:y_end, 1239:1321]
+            cropped_cred_image = frame[y_start:y_end, 1651:1761]  # Updated from 1239:1321 for 1440p
             # cv2.imshow("Image", cropped_cred_image)
             # cv2.waitKey()
             pytesseract.pytesseract.tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
@@ -49,8 +49,8 @@ class GetCreds():
             # points = self.reader.readtext(self.clean_frame(cropped_cred_image),allowlist ='0123456789')
             # print(points)
             all_points.append(points)
-            y_start = y_start + 73
-            y_end = y_start + 40
+            y_start = y_start + 97  # Updated from 73 for 1440p (73 * 1.333)
+            y_end = y_start + 53  # Updated from 40 for 1440p (40 * 1.333)
         return all_points
 
     def get_creds(self, frame):

@@ -1,6 +1,6 @@
 ALL_AGENTS = ["yoru", "astra", "killjoy", "omen", "raze", "reyna", "sage", "skye",
               "cypher", "jett", "breach", "brimstone", "kayo", "viper", "sova", "phoenix",
-              "chamber", "fade", "neon", "gekko", "deadlock", "clove", "harbor", "iso"]
+              "chamber", "fade", "neon", "gekko", "deadlock", "clove", "harbor", "iso", "tejo", "vyse"]
 # TEMPLATE_CROP_COORDINATES = {"y_start":0,"y_end":33,"x_start":0,"x_end":100}
 # FRAME_CROP_COORDINATES = {"y_start":107,"y_end":144,"x_start":1235,"x_end":1898}
 # KILL_FEED_JUMP_HEIGHT = 43
@@ -229,4 +229,4 @@ agents_ultimate_points = {"phoenix": 6, "jett": 8, "viper": 9,
                           "astra": 7, "yoru": 7, "kayo": 8,
                           "skye": 8,"chamber": 8,"fade": 8,
                           "neon": 7,"gekko": 7,"deadlock": 7,
-                          "clove": 7,"harbor": 7,"iso": 7}
+                          "clove": 7,"harbor": 7,"iso": 7, "tejo": 8, "vyse": 8}

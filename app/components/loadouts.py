@@ -21,7 +21,7 @@ class GetLoadouts():
                       [1]).split("_template")[0][1:]
             generated_weapon_templates.append({
                 "weapon": weapon,
-                "gray": cv2.imread(template, 0)[0:100, 0:139]
+                "gray": cv2.imread(template, 0)[0:133, 0:185]  # Updated from 100,139 for 1440p
             })
         return generated_weapon_templates
 
@@ -38,18 +38,27 @@ class GetLoadouts():
         return identified_weapon
 
     def identify_weapons(self, frame, side):
+        debug_frame = frame.copy()
         all_identified_weapons = []
         if side == "top":
-            y_start = 340
+            y_start = 453
         else:
-            y_start = 570
-        y_end = y_start + 34
+            y_start = 760
+        y_end = y_start + 45
+
         for agent_loadout in range(0, 5):
-            resized_frame = frame[y_start:y_end, 1056:1056+120]
+            # Draw rectangle for weapon region
+            start_point = (1408, y_start)
+            end_point = (1568, y_end)
+            cv2.rectangle(debug_frame, start_point, end_point, (0, 255, 0), 2)
+            
+            resized_frame = frame[y_start:y_end, 1408:1568]
             identified_weapon = self.process_loadouts_frame(resized_frame)
             all_identified_weapons.append(identified_weapon)
-            y_start = y_start + 34
-            y_end = y_start + 34
+            y_start = y_start + 45
+            y_end = y_start + 45
+        
+        cv2.imwrite(f'debug_loadouts_{side}.png', debug_frame)
         return all_identified_weapons
 
     def get_loadouts(self, frame):

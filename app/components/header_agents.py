@@ -20,8 +20,8 @@ class GetLiveAgents():
             agent = (template.split(r"\agent_templates"))[
                 1].split("_icon")[0][1:]
             original = cv2.resize(cv2.imread(
-                template, cv2.IMREAD_UNCHANGED), (40,40))
-            gray = cv2.resize(cv2.imread(template, 0), (40,40))
+                template, cv2.IMREAD_UNCHANGED), (59, 59))
+            gray = cv2.resize(cv2.imread(template, 0), (59, 59))
             o_ret, original_mask = cv2.threshold(
                 original[:, :, 3], 0, 255, cv2.THRESH_BINARY)
             f_ret, original_flipped_mask = cv2.threshold(
@@ -52,20 +52,29 @@ class GetLiveAgents():
         return identified_agent
 
     def process_frame(self, screen_frame, side):
+        debug_frame = screen_frame.copy()
         all_agents = []
-        width=44 
-        space_between_agents = 66 
+        width = 59
+        space_between_agents = 88
         if side == "left":
-            x_start = 442 
+            x_start = 589
         else:
-            x_start = 1169 
+            x_start = 1558
         x_end = x_start + width
+
         for agent_place in range(0, 5):
-            cropped_agent_image = screen_frame[28:72, x_start:x_end]
+            # Draw rectangle for agent region
+            start_point = (x_start, 37)
+            end_point = (x_end, 96)
+            cv2.rectangle(debug_frame, start_point, end_point, (0, 255, 0), 2)
+            
+            cropped_agent_image = screen_frame[37:96, x_start:x_end]
             identified_agent = self.identify_agent(cropped_agent_image, side)
             all_agents.append(identified_agent)
             x_start = x_start + space_between_agents
             x_end = x_start + width
+        
+        cv2.imwrite(f'debug_header_agents_{side}.png', debug_frame)
         return all_agents
 
     def get_agents(self, main_frame):

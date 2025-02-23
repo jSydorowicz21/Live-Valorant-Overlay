@@ -18,7 +18,7 @@ class GetScoreBoardAgents():
         for template in all_templates:
             agent = (template.split(r"\agent_templates"))[
                 1].split("_icon")[0][1:]
-            original = cv2.resize(cv2.imread(template), (33, 33))
+            original = cv2.resize(cv2.imread(template), (44, 44))  # Updated from 33,33 for 1440p
             generated_agent_templates.append({
                 "agent": agent,
                 "original": original
@@ -37,16 +37,16 @@ class GetScoreBoardAgents():
     def process_frame(self, screen_frame, side):
         all_agents = []
         if side == "top":
-            y_start = 338 #ends at 372
+            y_start = 451  # Updated from 338 for 1440p (338 * 1.333)
         else:
-            y_start = 570
-        y_end = y_start + 34
+            y_start = 760  # Updated from 570 for 1440p (570 * 1.333)
+        y_end = y_start + 45  # Updated from 34 for 1440p (34 * 1.333)
         for agent_place in range(0, 5):
-            cropped_agent_image = screen_frame[y_start:y_end, 573:607]
+            cropped_agent_image = screen_frame[y_start:y_end, 764:809]  # Updated from 573:607 for 1440p
             identified_agent = self.identify_agent(cropped_agent_image)
             all_agents.append(identified_agent)
-            y_start = y_start + 34
-            y_end = y_end + 34
+            y_start = y_start + 45  # Updated from 34 for 1440p
+            y_end = y_end + 45  # Updated from 34 for 1440p
         return all_agents
 
     def get_agents(self, main_frame):

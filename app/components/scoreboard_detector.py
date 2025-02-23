@@ -11,7 +11,8 @@ class ScoreBoardDetector():
 
     def detect_scoreboard(self, frame):
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        frame = frame[317:329,650:684]
+        # Updated from 317:329, 650:684 for 1440p (multiplied by 1.333)
+        frame = frame[772:792, 856:911]
         result = cv2.matchTemplate(
             frame, self.scoreboard_template, cv2.TM_CCOEFF_NORMED)
         print("Scoreboard result", cv2.minMaxLoc(result))

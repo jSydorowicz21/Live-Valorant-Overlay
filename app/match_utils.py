@@ -34,16 +34,23 @@ class MatchUtils():
                     value["health"] = 0
                 if "agents_with_loadouts_shields" in new_data:
                     for agent_information in new_data["agents_with_loadouts_shields"][side]:
-                        print("agent_information",agent_information,side)
+                        print("agent_information", agent_information, side)
                         if agent_information[0].lower() == value["agent"].lower():
                             value["weapon"] = agent_information[1]
                             value["shield"] = agent_information[2]
-                            value["current_ultimate_points"] = agent_information[3]["number"]
+                            ultimate_info = agent_information[3]
+                            if isinstance(ultimate_info, dict):
+                                value["current_ultimate_points"] = ultimate_info.get("number", None)
+                            elif isinstance(ultimate_info, str):
+                                # When ultimate info is a string (e.g., "READY"), store it as is.
+                                value["current_ultimate_points"] = ultimate_info
+                            else:
+                                value["current_ultimate_points"] = ultimate_info
 
         return match_details
 
     def switch_sides(self, match_details):
-        # Change blue to red and vice versa
+        # Change blue to red and vice versa.
         old_red_values = match_details["red"]
         old_blue_values = match_details["blue"]
         match_details.pop("red")

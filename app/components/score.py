@@ -23,10 +23,19 @@ class GetScore():
         return frame
 
     def get_score(self, screen_frame):
+        debug_frame = screen_frame.copy()
+        
+        # Draw rectangles for score regions
+        cv2.rectangle(debug_frame, (1078, 41), (1116, 84), (0, 255, 0), 2)  # left score
+        cv2.rectangle(debug_frame, (1446, 41), (1484, 84), (0, 255, 0), 2)  # right score
+        
+        cv2.imwrite('debug_score.png', debug_frame)
+        
         left_score = self.reader.readtext(self.clean_frame(
-            screen_frame[31:63, 809:837]), allowlist='0123456789')
+            screen_frame[41:84, 1078:1116]), allowlist='0123456789')
         right_score = self.reader.readtext(self.clean_frame(
-            screen_frame[31:63, 1085:1113]), allowlist='0123456789')
+            screen_frame[41:84, 1446:1484]), allowlist='0123456789')
+        
         if left_score == [] or right_score == []:
             return None
         else:

@@ -51,16 +51,16 @@ class GetHealth():
     def process_frame(self, frame, side):
         agents_health_points = []
         if side == "left":
-            x_start = 389
+            x_start = 519
         else:
-            x_start = 1192  # fix this
-        x_end = x_start + 45
+            x_start = 1589  # fix this
+        x_end = x_start + 60
         for agent_place in range(0, 5):
-            cropped_health_bar = frame[85:92, x_start:x_end]
+            cropped_health_bar = frame[113:123, x_start:x_end]
             detected_health = self.detect_health(cropped_health_bar)
             agents_health_points.append(detected_health)
-            x_start = x_start+73
-            x_end = x_start + 46
+            x_start = x_start+97
+            x_end = x_start + 61
         return agents_health_points
 
     def get_health(self, frame):

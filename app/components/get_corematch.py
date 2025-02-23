@@ -314,6 +314,9 @@ class GetCoreMatch():
             partyCount = 0
             partyIcons = {}
             for player in Players:
+                if player["CharacterID"] == "None":
+                    # skip this player as it's a coach
+                    continue
                 if player["Subject"] == self.puuid:
                     initiated_player_team = player["TeamID"].lower()
                 rank = self.getRank(player["Subject"], self.seasonID)

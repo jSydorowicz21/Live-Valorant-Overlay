@@ -37,18 +37,33 @@ class GetShields():
             return None
 
     def identify_shields(self, frame, side):
+        debug_frame = frame.copy()
         all_identified_shields = []
         if side == "top":
-            y_start = 338
+            y_start = 451
         else:
-            y_start = 570 
-        y_end = y_start + 34
+            y_start = 760
+        y_end = y_start + 45
+
         for agent_loadout in range(0, 5):
-            resized_frame = frame[y_start:y_end, 1179:1198]
+            # Draw rectangle for shield region
+            if side == "top":
+                start_point = (1567, y_start)
+                end_point = (1602, y_end)
+            else:
+                start_point = (1565, y_start)
+                end_point = (1600, y_end)
+            cv2.rectangle(debug_frame, start_point, end_point, (0, 255, 0), 2)
+            if side == "top":
+                resized_frame = frame[y_start:y_end, 1567:1602]
+            else:
+                resized_frame = frame[y_start:y_end, 1565:1600]
             identified_weapon = self.process_shields_frame(resized_frame)
             all_identified_shields.append(identified_weapon)
-            y_start = y_start + 34
-            y_end = y_end + 34
+            y_start = y_start + 45
+            y_end = y_end + 45
+        
+        cv2.imwrite(f'debug_shields_{side}.png', debug_frame)
         return all_identified_shields
 
     def get_shields(self, frame):
